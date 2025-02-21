@@ -23,7 +23,7 @@ namespace BasicWebServer.Server.Responses
         {
             if (this.Body != null)
             {
-                var contentLength = Encoding.UTF8.GetByteCount(this.Body).ToString();
+                string contentLength = Encoding.UTF8.GetByteCount(this.Body).ToString();
                 this.Headers.Add(Header.CONTENT_LENGTH, contentLength);
             }
 

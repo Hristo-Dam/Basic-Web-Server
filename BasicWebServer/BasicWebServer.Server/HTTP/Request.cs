@@ -1,5 +1,5 @@
 ﻿using System.Web;
-using ContentType = BasicWebServer.Server.Responses.ContentType;
+using BasicWebServer.Server.Responses;
 
 namespace BasicWebServer.Server.HTTP
 {
@@ -38,9 +38,9 @@ namespace BasicWebServer.Server.HTTP
             };
         }
 
-        private static Dictionary<string, string> ParseForm(HeaderCollection headers, string body)
+        private static IReadOnlyDictionary<string, string> ParseForm(HeaderCollection headers, string body)
         {
-            Dictionary<string, string> formCollection = new Dictionary<string, string>();
+            var formCollection = new Dictionary<string, string>();
 
             if (headers.Contains(Header.CONTENT_TYPE) && headers[Header.CONTENT_TYPE] == ContentType.FORM_URL_ENCODED)
             {

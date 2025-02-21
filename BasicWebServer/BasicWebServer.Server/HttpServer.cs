@@ -68,14 +68,6 @@ namespace BasicWebServer.Server
         }
         private void WriteResponse(NetworkStream networkStream, Response response)
         {
-//            var contentLenth = Encoding.UTF8.GetByteCount(message);
-
-//            var response = $@"HTTP/1.1 200 OK
-//Content-Type: text/plain; charset=UTF-8
-//Content-Length: {contentLenth}
-
-//{message}";
-
             var responseBytes = Encoding.UTF8.GetBytes(response.ToString());
             networkStream.Write(responseBytes);
         }
@@ -102,7 +94,7 @@ namespace BasicWebServer.Server
 
                 requestBuilder.Append(Encoding.UTF8.GetString(buffer, 0, bytesRead));
             }
-            //May not run ocrretly over Internet
+            // May not run ocrretly over Internet
             while (networkStream.DataAvailable);
 
             return requestBuilder.ToString();
