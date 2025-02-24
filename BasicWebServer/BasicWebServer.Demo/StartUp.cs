@@ -22,7 +22,7 @@ namespace BasicWebServer.Demo
                 new string[] { "https://judge.softuni.org", "https://softuni.org" });
 
             HttpServer server = new HttpServer(routes => routes
-                .MapGet(" / ", new TextResponse("Hello from the server!"))
+                .MapGet("/", new TextResponse("Hello from the server!"))
                 .MapGet("/Redirect", new RedirectResponse("https://www.softuni.com"))
                 .MapGet("/HTML", new HtmlResponse(HTML_FORM))
                 .MapPost("/HTML", new TextResponse("", StartUp.AddFormDataAction))
