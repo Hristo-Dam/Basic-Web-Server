@@ -63,18 +63,33 @@ namespace BasicWebServer.Server
                         response.PreRenderAction(request, response);
                     }
 
+                    AddSession(response, request);
+
                     await WriteResponseAsync(networkStream, response);
 
                     connection.Close();
                 });
             }
         }
+
+        private void AddSession(Response response, Request request)
+        {
+            var sessionExists = request.Session
+                .ContainsKey(Session.SESSION_CURRENT_DATE_KEY);
+
+            if (!sessionExists)
+            {
+                request.Session[Session.SESSION_CURRENT_DATE_KEY] = DateTime.Now.ToString();
+
+                response.Cookies.Add(Session.SESSION_COOKIE_NAME, request.Session.Id);
+            }
+        }
+
         private async Task WriteResponseAsync(NetworkStream networkStream, Response response)
         {
             var responseBytes = Encoding.UTF8.GetBytes(response.ToString());
             await networkStream.WriteAsync(responseBytes);
         }
-
         private async Task<string> ReadRequestAsync(NetworkStream networkStream)
         {
             var bufferLength = 1024;

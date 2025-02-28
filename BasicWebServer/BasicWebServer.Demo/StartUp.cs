@@ -31,6 +31,7 @@ namespace BasicWebServer.Demo
                 .MapGet("/Content", new HtmlResponse(StartUp.DOWNLOAD_FORM))
                 .MapPost("/Content", new TextFileResponse(StartUp.FILE_NAME))
                 .MapGet("/Cookies", new HtmlResponse("", StartUp.AddCookiesAction))
+                .MapGet("/Session", new TextResponse("", StartUp.DisplaySessionInfoAction))
             );
 
             await server.StartAsync();
@@ -74,7 +75,9 @@ namespace BasicWebServer.Demo
         }
         private static void AddCookiesAction(Request request, Response response)
         {
-            bool requestHasCookies = request.Cookies.Any();
+            bool requestHasCookies = request.Cookies
+                .Any(c => c.Name != Session.SESSION_COOKIE_NAME);
+
             string bodyText = string.Empty;
 
             if (requestHasCookies)
@@ -111,6 +114,26 @@ namespace BasicWebServer.Demo
             }
 
             response.Body = bodyText;
+        }
+        private static void DisplaySessionInfoAction(Request request, Response response)
+        {
+            bool sessionExists = request.Session
+                .ContainsKey(Session.SESSION_CURRENT_DATE_KEY);
+
+            string bodyText = string.Empty;
+
+            if (sessionExists)
+            {
+                var currentDate = request.Session[Session.SESSION_CURRENT_DATE_KEY];
+                bodyText = $"Stored date: {currentDate}!";
+            }
+            else
+            {
+                bodyText = "Current date stored!";
+            }
+
+            response.Body = string.Empty;
+            response.Body += bodyText;
         }
     }
 }
