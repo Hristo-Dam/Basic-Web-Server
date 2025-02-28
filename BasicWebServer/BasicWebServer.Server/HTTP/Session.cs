@@ -6,6 +6,7 @@ namespace BasicWebServer.Server.HTTP
     {
         public const string SESSION_COOKIE_NAME = "MyWebServerSID";
         public const string SESSION_CURRENT_DATE_KEY = "CurrentDate";
+        public const string SESSION_USER_KEY = "AuthenticatedUserId";
 
         private Dictionary<string, string> _data;
 
@@ -27,6 +28,10 @@ namespace BasicWebServer.Server.HTTP
         public bool ContainsKey(string key)
         {
             return this._data.ContainsKey(key);
+        }
+        public void Clear()
+        {
+            this._data.Clear();
         }
     }
 }
