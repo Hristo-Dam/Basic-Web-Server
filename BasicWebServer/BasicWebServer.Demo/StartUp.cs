@@ -1,6 +1,8 @@
 ﻿using BasicWebServer.Server;
 using BasicWebServer.Server.HTTP;
 using BasicWebServer.Server.Responses;
+using System.Text;
+using System.Web;
 
 namespace BasicWebServer.Demo
 {
@@ -28,19 +30,10 @@ namespace BasicWebServer.Demo
                 .MapPost("/HTML", new TextResponse("", StartUp.AddFormDataAction))
                 .MapGet("/Content", new HtmlResponse(StartUp.DOWNLOAD_FORM))
                 .MapPost("/Content", new TextFileResponse(StartUp.FILE_NAME))
+                .MapGet("/Cookies", new HtmlResponse("", StartUp.AddCookiesAction))
             );
 
             await server.StartAsync();
-        }
-        private static void AddFormDataAction(Request request, Response response)
-        {
-            response.Body = "";
-
-            foreach (var (key, value) in request.Form)
-            {
-                response.Body += $"{key} - {value}";
-                response.Body += Environment.NewLine;
-            }
         }
         private static async Task<string> DownloadWebSiteContentAsync(string url)
         {
@@ -68,6 +61,56 @@ namespace BasicWebServer.Demo
             var responsesString = string.Join(Environment.NewLine + new String('-', 100), responses);
 
             await File.WriteAllTextAsync(fileName, responsesString);
+        }
+        private static void AddFormDataAction(Request request, Response response)
+        {
+            response.Body = "";
+
+            foreach (var (key, value) in request.Form)
+            {
+                response.Body += $"{key} - {value}";
+                response.Body += Environment.NewLine;
+            }
+        }
+        private static void AddCookiesAction(Request request, Response response)
+        {
+            bool requestHasCookies = request.Cookies.Any();
+            string bodyText = string.Empty;
+
+            if (requestHasCookies)
+            {
+                StringBuilder cookieText = new StringBuilder();
+
+                cookieText.AppendLine("<h1>Cookies</h1>");
+
+                cookieText.AppendLine(@"<table border='1'><tr><th>Name</th><th>Value</th></tr>");
+
+                foreach (var cookie in request.Cookies)
+                {
+                    cookieText.Append("<tr>");
+
+                    cookieText.Append($"<td>{HttpUtility.HtmlEncode(cookie.Name)}</td>");
+                    cookieText.Append($"<td>{HttpUtility.HtmlEncode(cookie.Value)}</td>");
+
+                    cookieText.Append("</tr>");
+                }
+
+                cookieText.Append("</table>");
+
+                bodyText = cookieText.ToString();
+            }
+            else
+            {
+                bodyText = "<h1>No cookies yet!</h1>";
+            }
+
+            if (!requestHasCookies)
+            {
+                response.Cookies.Add("My-Cookie", "My-Value");
+                response.Cookies.Add("My-Second-Cookie", "My-Second-Value");
+            }
+
+            response.Body = bodyText;
         }
     }
 }

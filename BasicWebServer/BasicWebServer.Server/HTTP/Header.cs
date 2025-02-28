@@ -10,6 +10,8 @@ namespace BasicWebServer.Server.HTTP
         public const string DATE = "Date";
         public const string LOCATION = "Location";
         public const string SERVER = "Server";
+        public const string COOCKIE = "Cookie";
+        public const string SET_COOKIE = "Set-Cookie";
 
         public Header(string name, string value)
         {

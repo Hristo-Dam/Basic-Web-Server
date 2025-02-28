@@ -22,12 +22,6 @@ namespace BasicWebServer.Server.HTTP
         public void Add(string name, string value)
             => this._headers[name] = new Header(name, value);
 
-        //public void Add(string name, string value)
-        //{
-        //    Header header = new Header(name, value);
-        //    this._headers.Add(name, header);
-        //}
-
         public IEnumerator<Header> GetEnumerator()
         {
             return this._headers.Values.GetEnumerator();
