@@ -1,15 +1,11 @@
 ﻿using BasicWebServer.Demo.Controllers;
 using BasicWebServer.Server;
 using BasicWebServer.Server.Controllers;
-using BasicWebServer.Server.HTTP;
 
 namespace BasicWebServer.Demo
 {
     public class StartUp
     {
-        private const string USERNAME = "user";
-        private const string PASSWORD = "user123";
-
         public static async Task Main()
         {
             HttpServer server = new HttpServer(routes => routes

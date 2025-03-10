@@ -29,16 +29,6 @@ namespace BasicWebServer.Demo.Controllers
             };
 
             return View(model);
-
-            //string formData = string.Empty;
-
-            //foreach (var kvp in this.Request.Form)
-            //{
-            //    formData += $"{kvp.Key} - {kvp.Value}";
-            //    formData += Environment.NewLine;
-            //}
-
-            //return Text(formData);
         }
         public Response Content() => View();
         public Response DownloadContent()

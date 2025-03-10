@@ -10,7 +10,7 @@ namespace BasicWebServer.Server.Controllers
         {
             this.Request = request;
         }
-
+        
         protected Request Request { get; init; }
 
         protected Response Text(string text) => new TextResponse(text);

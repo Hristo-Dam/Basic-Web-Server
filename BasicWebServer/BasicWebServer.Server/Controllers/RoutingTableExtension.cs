@@ -5,8 +5,6 @@ namespace BasicWebServer.Server.Controllers
 {
     public static class RoutingTableExtension
     {
-
-
         public static IRoutingTable MapGet<TController>(
             this IRoutingTable routingTable,
             string path,
