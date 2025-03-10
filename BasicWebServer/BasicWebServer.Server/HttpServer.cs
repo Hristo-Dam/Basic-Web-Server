@@ -57,12 +57,6 @@ namespace BasicWebServer.Server
 
                     Response response = this._routingTable.MatchRequest(request);
 
-                    // Execute pre-render action for the response
-                    if (response.PreRenderAction != null)
-                    {
-                        response.PreRenderAction(request, response);
-                    }
-
                     AddSession(response, request);
 
                     await WriteResponseAsync(networkStream, response);
@@ -84,7 +78,6 @@ namespace BasicWebServer.Server
                 response.Cookies.Add(Session.SESSION_COOKIE_NAME, request.Session.Id);
             }
         }
-
         private async Task WriteResponseAsync(NetworkStream networkStream, Response response)
         {
             var responseBytes = Encoding.UTF8.GetBytes(response.ToString());

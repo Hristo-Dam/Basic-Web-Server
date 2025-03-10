@@ -1,6 +1,5 @@
 ﻿using BasicWebServer.Server.HTTP;
 using BasicWebServer.Server.Responses;
-using System.IO.Enumeration;
 
 namespace BasicWebServer.Server.Controllers
 {
