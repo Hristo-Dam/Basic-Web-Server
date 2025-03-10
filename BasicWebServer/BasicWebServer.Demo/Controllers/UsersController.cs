@@ -5,11 +5,6 @@ namespace BasicWebServer.Demo.Controllers
 {
     public class UsersController : Controller
     {
-        private const string LOGIN_FORM = @"<form action='/Login' method='POST'>
-   Username: <input type='text' name='Username'/>
-   Password: <input type='text' name='Password'/>
-   <input type='submit' value ='Log In' /> 
-</form>";
         private const string USERNAME = "user";
         private const string PASSWORD = "user123";
 
@@ -17,7 +12,7 @@ namespace BasicWebServer.Demo.Controllers
         {
         }
 
-        public Response Login() => this.Html(LOGIN_FORM);
+        public Response Login() => View();
         public Response LogInUser()
         {
             this.Request.Session.Clear();
