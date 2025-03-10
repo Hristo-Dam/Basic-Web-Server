@@ -6,7 +6,6 @@ namespace BasicWebServer.Server.HTTP
     public class Request
     {
         private static Dictionary<string, Session> Sessions = new Dictionary<string, Session>();
-
         public Method Method { get; private set; }
         public string Url { get; private set; }
         public HeaderCollection Headers { get; private set; }
@@ -47,7 +46,6 @@ namespace BasicWebServer.Server.HTTP
                 Form = form
             };
         }
-
         private static Session GetSession(CookieCollection cookies)
         {
             var sessionId = cookies.Contains(Session.SESSION_COOKIE_NAME) ?
@@ -61,7 +59,6 @@ namespace BasicWebServer.Server.HTTP
 
             return Sessions[sessionId];
         }
-
         private static CookieCollection ParseCookies(HeaderCollection headers)
         {
             var cookieCollection = new CookieCollection();
